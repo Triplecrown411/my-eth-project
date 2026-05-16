@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  foundry:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: my-eth-project
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Show Foundry version
+        run: forge --version
+
+      - name: Install dependencies
+        run: forge install
+
+      - name: Build
+        run: forge build
+
+      - name: Test
+        run: forge test -vvv
